@@ -4,9 +4,14 @@ require('dotenv').config();
 const express = require('express');
 const transactionRoutes = require('./routes/transactions');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const app = express();
 
 app.use(express.json());
+
+app.use(cors({
+    origin: 'http://localhost:5173'
+}));
 
 app.use((req: Request, res: Response, next: () => void) => {
     console.log(req.path, req.method);

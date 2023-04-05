@@ -1,4 +1,4 @@
-import { TransactionType } from './transactionType';
+import { TransactionCategory } from './transactionCategory';
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -12,9 +12,9 @@ const transactionSchema = new Schema({
         type: Date,
         required: true
     },
-    transactionType: {
+    transactionCategory: {
         type: String,
-        enum: TransactionType,
+        enum: TransactionCategory,
         required: true
     },
     description: {

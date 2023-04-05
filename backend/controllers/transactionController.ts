@@ -23,10 +23,10 @@ const getSingleTransactionByID = async (req: Request, res: Response) => {
 }
 
 const createNewTransaction = async (req: Request, res: Response) => {
-    const { value, date, transactionType, description } = req.body;
+    const { value, date, transactionCategory, description } = req.body;
 
     try {
-        const transaction = await Transaction.create({ value, date, transactionType, description });
+        const transaction = await Transaction.create({ value, date, transactionCategory, description });
         res.status(200).json(transaction);
     } catch (error: unknown) {
         if (error instanceof Error) {
