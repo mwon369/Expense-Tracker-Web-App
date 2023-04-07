@@ -1,8 +1,11 @@
-import React, { FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { TransactionCategory } from "../../../backend/models/transactionCategory";
 import axios from "axios";
+import { useTransactionsContext } from "../hooks/useTransactionsContext";
+import { STATE_ACTIONS } from "../context/TransactionsContext";
 
 const TransactionForm = () => {
+  const { dispatch } = useTransactionsContext();
   const [value, setValue] = useState<number>(0);
   const [date, setDate] = useState<Date | null>(null);
   const [category, setCategory] = useState<TransactionCategory>(
@@ -26,10 +29,9 @@ const TransactionForm = () => {
       .then((resp) => {
         if (resp.status === 200) {
           setValue(0);
-          setDate(null);
           setDescription("");
           setError(null);
-          console.log(resp.data);
+          dispatch({ type: STATE_ACTIONS.CREATE_NEW, payload: resp.data });
         } else {
           setError(
             "Failed to add new transaction. Please check that you filled out all the fields correctly"
