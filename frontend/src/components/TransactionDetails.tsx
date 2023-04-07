@@ -13,7 +13,7 @@ const TransactionDetails = (transactionProps: Transaction) => {
             ? "income"
             : "expense"
         }
-      >{`${value} (${transactionCategory})`}</h4>
+      >{`$${value} (${transactionCategory})`}</h4>
       <p>
         <strong>Date: &nbsp; </strong>
         {dateParsed.toDateString()}

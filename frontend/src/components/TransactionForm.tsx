@@ -4,7 +4,7 @@ import axios from "axios";
 
 const TransactionForm = () => {
   const [value, setValue] = useState<number>(0);
-  const [date, setDate] = useState<string | Date>("");
+  const [date, setDate] = useState<Date | null>(null);
   const [category, setCategory] = useState<TransactionCategory>(
     TransactionCategory.INCOME
   );
@@ -26,8 +26,7 @@ const TransactionForm = () => {
       .then((resp) => {
         if (resp.status === 200) {
           setValue(0);
-          setDate("");
-          setCategory(TransactionCategory.INCOME);
+          setDate(null);
           setDescription("");
           setError(null);
           console.log(resp.data);
@@ -38,7 +37,7 @@ const TransactionForm = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response.data.error);
         setError(
           "Failed to add new transaction. Please check that you filled out all the fields correctly."
         );
@@ -52,30 +51,21 @@ const TransactionForm = () => {
       <input
         type="number"
         onChange={(e) => setValue(e.target.valueAsNumber)}
-        value={value}
+        value={value === 0 ? "" : value}
       />
 
       <label>Transaction Date: </label>
-      <input type="date" onChange={(e) => setDate(e.target.value)} />
+      <input type="date" onChange={(e) => setDate(e.target.valueAsDate)} />
 
       <label>Transaction Category: </label>
-      <select name="selectedCategory" defaultValue="income">
-        <option
-          value="income"
-          onSelect={(e) =>
-            setCategory(e.currentTarget.value as TransactionCategory)
-          }
-        >
-          Income
-        </option>
-        <option
-          value="expense"
-          onSelect={(e) =>
-            setCategory(e.currentTarget.value as TransactionCategory)
-          }
-        >
-          Expense
-        </option>
+      <select
+        name="selectedCategory"
+        defaultValue={TransactionCategory.INCOME}
+        onChange={(e) => setCategory(e.target.value as TransactionCategory)}
+        value={category}
+      >
+        <option value={TransactionCategory.INCOME}>Income</option>
+        <option value={TransactionCategory.EXPENSE}>Expense</option>
       </select>
 
       <label>Transaction Description: </label>
