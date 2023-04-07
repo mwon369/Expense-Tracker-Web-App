@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 
 :root {
-  --income: #1aac83;
-  --expense: #e7195a;
+  --success: #1aac83;
+  --error: #e7195a;
 }
 
 body {
@@ -57,11 +57,11 @@ header a {
 }
 
 .transaction-details h4.income {
-  color: var(--income);
+  color: var(--success);
 }
 
 .transaction-details h4.expense {
-  color: var(--expense);
+  color: var(--error);
 }
 
 .transaction-details p {
@@ -79,4 +79,49 @@ header a {
   padding: 6px;
   border-radius: 50%;
   color: #333;
+}
+
+label, input {
+  display: block;
+}
+
+input {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: "Poppins";
+}
+
+select {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: "Poppins";
+}
+
+form button {
+  background: var(--success);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+div.error {
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 4px;
+  margin: 20px 0;
 }

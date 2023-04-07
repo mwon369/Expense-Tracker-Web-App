@@ -3,6 +3,7 @@ import axios from "axios";
 import { Transaction } from "../utils/Types";
 import { TransactionCategory } from "../../../backend/models/transactionCategory";
 import TransactionDetails from "../components/TransactionDetails";
+import TransactionForm from "../components/TransactionForm";
 
 const Home = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -41,6 +42,7 @@ const Home = () => {
             <TransactionDetails key={t._id.toString()} {...t} />
           ))}
       </div>
+      <TransactionForm />
     </div>
   );
 };
