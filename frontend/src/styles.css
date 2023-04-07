@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 
 :root {
-  --primary: #1aac83;
-  --error: #e7195a;
+  --income: #1aac83;
+  --expense: #e7195a;
 }
 
 body {
@@ -34,4 +34,49 @@ header a {
   padding: 20px;
   margin: 0 auto;
   font-weight: 500;
+}
+
+.home {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 100px;
+}
+
+.transaction-details {
+  background: #fff;
+  border-radius: 15px;
+  margin: 20px auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+
+.transaction-details h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+}
+
+.transaction-details h4.income {
+  color: var(--income);
+}
+
+.transaction-details h4.expense {
+  color: var(--expense);
+}
+
+.transaction-details p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.transaction-details span {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333;
 }

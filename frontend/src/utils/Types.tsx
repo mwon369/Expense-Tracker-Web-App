@@ -1,10 +1,12 @@
 import { TransactionCategory } from "../../../backend/models/transactionCategory";
 import { ObjectId } from "mongodb";
 
-export type Transaction = {
+export interface Transaction {
   _id: ObjectId;
-  value: Number;
-  date: Date;
+  value: number;
+  date: string;
   transactionCategory: TransactionCategory;
   description: string;
-};
+  createdAt: string;
+  updatedAt: string;
+}
