@@ -43,22 +43,27 @@ export const transactionReducer = (
   switch (action.type) {
     case STATE_ACTIONS.GET_ALL:
       return {
+        ...state,
         transactions: action.payload,
       };
     case STATE_ACTIONS.GET_BY_ID:
       return {
+        ...state,
         transactions: [action.payload],
       };
     case STATE_ACTIONS.CREATE_NEW:
       return {
+        ...state,
         transactions: [action.payload, ...state.transactions],
       };
     case STATE_ACTIONS.UPDATE_BY_ID:
       return {
+        ...state,
         transactions: [action.payload, ...state.transactions],
       };
     case STATE_ACTIONS.DELETE_BY_ID:
       return {
+        ...state,
         transactions: state.transactions.filter(
           (t) => t._id.toString() !== action.payload._id
         ),

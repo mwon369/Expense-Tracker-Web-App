@@ -1,10 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { Transaction } from "../utils/Types";
 import { TransactionCategory } from "../../../backend/models/transactionCategory";
+import axios from "axios";
+import { useTransactionsContext } from "../hooks/useTransactionsContext";
+import { STATE_ACTIONS } from "../context/TransactionsContext";
+import DeletePrompt from "./DeletePrompt";
 
-const TransactionDetails = (transactionProps: Transaction) => {
-  const { value, date, transactionCategory, description } = transactionProps;
+const TransactionDetails = (props: Transaction) => {
+  const { value, date, transactionCategory, description } = props;
   const dateParsed = new Date(date);
+  const { dispatch } = useTransactionsContext();
+  const [error, setError] = useState<string | null>(null);
+  const [showDeletePrompt, setShowDeletePrompt] = useState<boolean>(false);
+
+  const hideError = () => {
+    setTimeout(() => {
+      setError(null);
+    }, 2500);
+  };
+
+  const handlePromptShow = () => setShowDeletePrompt(!showDeletePrompt);
+
+  const handleDelete = async () => {
+    const id = props._id;
+    axios
+      .delete(`${import.meta.env.VITE_BASE_URL}/api/transactions/${id}`)
+      .then((resp) => {
+        dispatch({ type: STATE_ACTIONS.DELETE_BY_ID, payload: resp.data });
+      })
+      .catch((error) => {
+        console.log(error.response.data.error);
+        setError("Delete failed. Try again later.");
+        hideError();
+      });
+    handlePromptShow();
+  };
+
   return (
     <div className="transaction-details">
       <h4
@@ -22,6 +53,16 @@ const TransactionDetails = (transactionProps: Transaction) => {
         <strong>Description: &nbsp; </strong>
         {description}
       </p>
+      <span onClick={handlePromptShow} className="material-symbols-outlined">
+        Delete
+      </span>
+      {showDeletePrompt && (
+        <DeletePrompt
+          handlePromptShow={handlePromptShow}
+          handleDelete={handleDelete}
+        />
+      )}
+      {error && <div className="error">{error}</div>}
     </div>
   );
 };

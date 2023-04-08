@@ -10,7 +10,7 @@ const Home = () => {
   const { state, dispatch } = useTransactionsContext();
   const [numberTotal, setNumberTotal] = useState<number>(0);
 
-  const fetchTransactionData = (uri: string) => {
+  const fetchTransactionData = async (uri: string) => {
     axios
       .get(uri)
       .then((resp) => {
