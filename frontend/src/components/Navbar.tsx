@@ -8,6 +8,9 @@ const Navbar = () => {
         <Link to="/">
           <h1>Expense Tracker</h1>
         </Link>
+        <Link to="/stats/">
+          <h1>My Finance Stats</h1>
+        </Link>
       </div>
     </header>
   );

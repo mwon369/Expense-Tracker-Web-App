@@ -1,11 +1,12 @@
 import { FormEvent, useState } from "react";
 import { TransactionCategory } from "../../../backend/models/transactionCategory";
 import axios from "axios";
-import { useTransactionsContext } from "../hooks/useTransactionsContext";
-import { STATE_ACTIONS } from "../context/TransactionsContext";
+import { useTransactionContext } from "../hooks/useTransactionContext";
+import { STATE_ACTIONS } from "../context/TransactionContext";
+import { roundToTwoDp } from "../utils/HelperFunctions";
 
 const TransactionForm = () => {
-  const { dispatch } = useTransactionsContext();
+  const { dispatch } = useTransactionContext();
   const [value, setValue] = useState<number>(0);
   const [date, setDate] = useState<Date | null>(null);
   const [category, setCategory] = useState<TransactionCategory>(
@@ -18,7 +19,7 @@ const TransactionForm = () => {
     e.preventDefault();
 
     const transaction = {
-      value: value,
+      value: roundToTwoDp(value),
       date: date,
       transactionCategory: category,
       description: description,

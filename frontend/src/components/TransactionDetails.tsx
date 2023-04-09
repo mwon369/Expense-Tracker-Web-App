@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Transaction } from "../utils/Types";
 import { TransactionCategory } from "../../../backend/models/transactionCategory";
 import axios from "axios";
-import { useTransactionsContext } from "../hooks/useTransactionsContext";
-import { STATE_ACTIONS } from "../context/TransactionsContext";
+import { useTransactionContext } from "../hooks/useTransactionContext";
+import { STATE_ACTIONS } from "../context/TransactionContext";
 import DeletePrompt from "./DeletePrompt";
 
 const TransactionDetails = (props: Transaction) => {
   const { value, date, transactionCategory, description } = props;
   const dateParsed = new Date(date);
-  const { dispatch } = useTransactionsContext();
+  const { dispatch } = useTransactionContext();
   const [error, setError] = useState<string | null>(null);
   const [showDeletePrompt, setShowDeletePrompt] = useState<boolean>(false);
 

@@ -3,12 +3,11 @@ import axios from "axios";
 import { TransactionCategory } from "../../../backend/models/transactionCategory";
 import TransactionDetails from "../components/TransactionDetails";
 import TransactionForm from "../components/TransactionForm";
-import { useTransactionsContext } from "../hooks/useTransactionsContext";
-import { STATE_ACTIONS } from "../context/TransactionsContext";
+import { useTransactionContext } from "../hooks/useTransactionContext";
+import { STATE_ACTIONS } from "../context/TransactionContext";
 
 const Home = () => {
-  const { state, dispatch } = useTransactionsContext();
-  const [numberTotal, setNumberTotal] = useState<number>(0);
+  const { state, dispatch } = useTransactionContext();
 
   const fetchTransactionData = async (uri: string) => {
     axios
@@ -21,18 +20,8 @@ const Home = () => {
       });
   };
 
-  const sumTotal = () => {
-    let result = state.transactions.reduce((total, t) => {
-      return t.transactionCategory === TransactionCategory.INCOME
-        ? total + t.value
-        : total - t.value;
-    }, 0);
-    return result;
-  };
-
   useEffect(() => {
     fetchTransactionData(`${import.meta.env.VITE_BASE_URL}/api/transactions/`);
-    setNumberTotal(sumTotal());
   }, []);
 
   return (
