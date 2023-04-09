@@ -21,12 +21,13 @@ header .container {
   padding: 10px 20px;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
 }
 
 header a {
-  color: #333;
+  color: black;
   text-decoration: none;
+  margin: 0 60px 0 0;
 }
 
 .pages{
@@ -56,11 +57,11 @@ header a {
   font-size: 1.2em;
 }
 
-.transaction-details h4.income {
+.income {
   color: var(--success);
 }
 
-.transaction-details h4.expense {
+.expense {
   color: var(--error);
 }
 
@@ -83,6 +84,12 @@ header a {
 
 label, input {
   display: block;
+}
+
+.create {
+  background-color: white;
+  padding: 10px 30px 0 30px;
+  border-radius: 30px;
 }
 
 input, select {
@@ -140,4 +147,19 @@ div.error {
 
 .prompt .close-btn {
   background-color: rgb(255, 255, 255);
+}
+
+.stats-container {
+  background-color: white;
+  width: 100%;
+  padding: 20px 20px 20px 20px;
+  text-align: center;
+  border-radius: 30px;
+  font-size: 1.2em;
+  margin: 20px 0 0 0;
+}
+
+.selected-link {
+  text-decoration-line: underline;
+  text-decoration-color: black;
 }

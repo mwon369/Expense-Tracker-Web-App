@@ -83,7 +83,7 @@ export const transactionReducer = (
     case STATE_ACTIONS.GET_BY_ID:
       return {
         ...state,
-        transactions: [action.payload],
+        transactions: action.payload,
       };
     case STATE_ACTIONS.CREATE_NEW:
       updatedTransactions = [action.payload, ...state.transactions];
@@ -113,7 +113,7 @@ export const transactionReducer = (
         updatedTransactions,
         TransactionCategory.EXPENSE
       );
-      netTotal = totalIncome + totalExpenses;
+      netTotal = totalIncome - totalExpenses;
       return {
         ...state,
         transactions: updatedTransactions,
@@ -133,7 +133,7 @@ export const transactionReducer = (
         updatedTransactions,
         TransactionCategory.EXPENSE
       );
-      netTotal = totalIncome + totalExpenses;
+      netTotal = totalIncome - totalExpenses;
       return {
         ...state,
         transactions: updatedTransactions,
