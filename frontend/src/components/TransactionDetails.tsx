@@ -10,12 +10,12 @@ const TransactionDetails = (props: Transaction) => {
   const { value, date, transactionCategory, description } = props;
   const dateParsed = new Date(date);
   const { dispatch } = useTransactionContext();
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string>("");
   const [showDeletePrompt, setShowDeletePrompt] = useState<boolean>(false);
 
   const hideError = () => {
     setTimeout(() => {
-      setError(null);
+      setError("");
     }, 2500);
   };
 

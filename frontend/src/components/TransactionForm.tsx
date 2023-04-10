@@ -9,11 +9,15 @@ const TransactionForm = () => {
   const { dispatch } = useTransactionContext();
   const [value, setValue] = useState<number>(0);
   const [date, setDate] = useState<Date | null>(null);
-  const [category, setCategory] = useState<TransactionCategory>(
-    TransactionCategory.INCOME
-  );
+  const [category, setCategory] = useState<TransactionCategory | "">("");
   const [description, setDescription] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string>("");
+
+  const hideError = () => {
+    setTimeout(() => {
+      setError("");
+    }, 2500);
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,19 +35,14 @@ const TransactionForm = () => {
         if (resp.status === 200) {
           setValue(0);
           setDescription("");
-          setError(null);
+          setError("");
           dispatch({ type: STATE_ACTIONS.CREATE_NEW, payload: resp.data });
-        } else {
-          setError(
-            "Failed to add new transaction. Please check that you filled out all the fields correctly"
-          );
         }
       })
       .catch((error) => {
         console.log(error.response.data.error);
-        setError(
-          "Failed to add new transaction. Please check that you filled out all the fields correctly."
-        );
+        setError("Please fill out all the fields.");
+        hideError();
       });
   };
 
@@ -54,19 +53,25 @@ const TransactionForm = () => {
       <input
         type="number"
         onChange={(e) => setValue(e.target.valueAsNumber)}
-        value={value === 0 ? "" : value}
+        value={value === 0 ? "" : value.toString()}
+        className={!value ? "unfilled" : "filled"}
       />
 
       <label>Transaction Date: </label>
-      <input type="date" onChange={(e) => setDate(e.target.valueAsDate)} />
+      <input
+        type="date"
+        onChange={(e) => setDate(e.target.valueAsDate)}
+        className={!date ? "unfilled" : "filled"}
+      />
 
       <label>Transaction Category: </label>
       <select
         name="selectedCategory"
-        defaultValue={TransactionCategory.INCOME}
         onChange={(e) => setCategory(e.target.value as TransactionCategory)}
         value={category}
+        className={!category ? "unfilled" : "filled"}
       >
+        <option value={""}>----</option>
         <option value={TransactionCategory.INCOME}>Income</option>
         <option value={TransactionCategory.EXPENSE}>Expense</option>
       </select>
@@ -75,7 +80,8 @@ const TransactionForm = () => {
       <input
         type="text"
         onChange={(e) => setDescription(e.target.value)}
-        value={description?.toString()}
+        value={description}
+        className={!description ? "unfilled" : "filled"}
       />
 
       <button>Add Transaction</button>

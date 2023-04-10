@@ -86,10 +86,12 @@ label, input {
   display: block;
 }
 
-.create {
+form.create {
   background-color: white;
   padding: 10px 30px 0 30px;
   border-radius: 30px;
+  min-height: 570px;
+  max-height: 570px;
 }
 
 input, select {
@@ -103,7 +105,7 @@ input, select {
   font-family: "Poppins";
 }
 
-form button {
+form.create button {
   background: var(--success);
   border: 0;
   color: #fff;
@@ -119,7 +121,7 @@ div.error {
   border: 1px solid var(--error);
   color: var(--error);
   border-radius: 4px;
-  margin: 20px 0;
+  margin: 12.5px 0;
 }
 
 .prompt {
@@ -162,4 +164,12 @@ div.error {
 .selected-link {
   text-decoration-line: underline;
   text-decoration-color: black;
+}
+
+select.unfilled, input.unfilled {
+  border: 1px solid var(--error)
+}
+
+select.filled, input.filled {
+  border: 1px solid var(--success)
 }
