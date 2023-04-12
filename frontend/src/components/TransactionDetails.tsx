@@ -3,7 +3,7 @@ import { Transaction } from "../utils/Types";
 import { TransactionCategory } from "../../../backend/models/transactionCategory";
 import axios from "axios";
 import { useTransactionContext } from "../hooks/useTransactionContext";
-import { STATE_ACTIONS } from "../context/TransactionContext";
+import { TRANSACTION_STATE_ACTIONS } from "../context/TransactionContext";
 import DeletePrompt from "./DeletePrompt";
 
 const TransactionDetails = (props: Transaction) => {
@@ -23,10 +23,13 @@ const TransactionDetails = (props: Transaction) => {
 
   const handleDelete = async () => {
     const id = props._id;
-    axios
+    await axios
       .delete(`${import.meta.env.VITE_BASE_URL}/api/transactions/${id}`)
       .then((resp) => {
-        dispatch({ type: STATE_ACTIONS.DELETE_BY_ID, payload: resp.data });
+        dispatch({
+          type: TRANSACTION_STATE_ACTIONS.DELETE_BY_ID,
+          payload: resp.data,
+        });
       })
       .catch((error) => {
         console.log(error.response.data.error);

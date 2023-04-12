@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import { TransactionCategory } from "../../../backend/models/transactionCategory";
 import axios from "axios";
 import { useTransactionContext } from "../hooks/useTransactionContext";
-import { STATE_ACTIONS } from "../context/TransactionContext";
+import { TRANSACTION_STATE_ACTIONS } from "../context/TransactionContext";
 import { roundToTwoDp } from "../utils/HelperFunctions";
 
 const TransactionForm = () => {
@@ -29,14 +29,17 @@ const TransactionForm = () => {
       description: description,
     };
 
-    axios
+    await axios
       .post(`${import.meta.env.VITE_BASE_URL}/api/transactions/`, transaction)
       .then((resp) => {
         if (resp.status === 200) {
           setValue(0);
           setDescription("");
           setError("");
-          dispatch({ type: STATE_ACTIONS.CREATE_NEW, payload: resp.data });
+          dispatch({
+            type: TRANSACTION_STATE_ACTIONS.CREATE_NEW,
+            payload: resp.data,
+          });
         }
       })
       .catch((error) => {
@@ -52,16 +55,16 @@ const TransactionForm = () => {
       <label>Transaction Value: </label>
       <input
         type="number"
+        className={!value ? "unfilled" : "filled"}
         onChange={(e) => setValue(e.target.valueAsNumber)}
         value={value === 0 ? "" : value.toString()}
-        className={!value ? "unfilled" : "filled"}
       />
 
       <label>Transaction Date: </label>
       <input
         type="date"
-        onChange={(e) => setDate(e.target.valueAsDate)}
         className={!date ? "unfilled" : "filled"}
+        onChange={(e) => setDate(e.target.valueAsDate)}
       />
 
       <label>Transaction Category: </label>
@@ -79,9 +82,9 @@ const TransactionForm = () => {
       <label>Transaction Description: </label>
       <input
         type="text"
+        className={!description ? "unfilled" : "filled"}
         onChange={(e) => setDescription(e.target.value)}
         value={description}
-        className={!description ? "unfilled" : "filled"}
       />
 
       <button>Add Transaction</button>

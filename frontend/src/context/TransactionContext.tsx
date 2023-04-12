@@ -25,7 +25,7 @@ interface ITransactionContext {
   dispatch: Dispatch<ITransactionAction>;
 }
 
-export const STATE_ACTIONS = {
+export const TRANSACTION_STATE_ACTIONS = {
   GET_ALL: "GET_ALL",
   GET_BY_ID: "GET_BY_ID",
   CREATE_NEW: "CREATE_NEW",
@@ -63,7 +63,7 @@ export const transactionReducer = (
   let netTotal = 0;
   let updatedTransactions: Transaction[] = [];
   switch (action.type) {
-    case STATE_ACTIONS.GET_ALL:
+    case TRANSACTION_STATE_ACTIONS.GET_ALL:
       totalIncome = sumIncomeOrExpenses(
         action.payload,
         TransactionCategory.INCOME
@@ -80,12 +80,12 @@ export const transactionReducer = (
         totalExpenses: totalExpenses,
         netTotal: netTotal,
       };
-    case STATE_ACTIONS.GET_BY_ID:
+    case TRANSACTION_STATE_ACTIONS.GET_BY_ID:
       return {
         ...state,
         transactions: action.payload,
       };
-    case STATE_ACTIONS.CREATE_NEW:
+    case TRANSACTION_STATE_ACTIONS.CREATE_NEW:
       updatedTransactions = [action.payload, ...state.transactions];
       totalIncome = sumIncomeOrExpenses(
         updatedTransactions,
@@ -103,7 +103,7 @@ export const transactionReducer = (
         totalExpenses: totalExpenses,
         netTotal: netTotal,
       };
-    case STATE_ACTIONS.UPDATE_BY_ID:
+    case TRANSACTION_STATE_ACTIONS.UPDATE_BY_ID:
       updatedTransactions = [action.payload, ...state.transactions];
       totalIncome = sumIncomeOrExpenses(
         updatedTransactions,
@@ -121,7 +121,7 @@ export const transactionReducer = (
         totalExpenses: totalExpenses,
         netTotal: netTotal,
       };
-    case STATE_ACTIONS.DELETE_BY_ID:
+    case TRANSACTION_STATE_ACTIONS.DELETE_BY_ID:
       updatedTransactions = state.transactions.filter(
         (t) => t._id.toString() !== action.payload._id
       );
