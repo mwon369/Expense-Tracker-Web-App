@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 require('dotenv').config();
 const express = require('express');
 const transactionRoutes = require('./routes/transactions');
+const userRoutes = require('./routes/users');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
@@ -19,6 +20,7 @@ app.use((req: Request, res: Response, next: () => void) => {
 })
 
 app.use('/api/transactions', transactionRoutes);
+app.use('/api/user', userRoutes);
 
 mongoose.connect(process.env.MONGO_URI)
         .then(() => {
