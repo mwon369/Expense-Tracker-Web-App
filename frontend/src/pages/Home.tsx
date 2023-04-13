@@ -17,7 +17,7 @@ const Home = () => {
       })
       .then((resp) => {
         dispatch({
-          type: TRANSACTION_STATE_ACTIONS.GET_ALL,
+          type: TRANSACTION_STATE_ACTIONS.SET_ALL,
           payload: resp.data,
         });
       })

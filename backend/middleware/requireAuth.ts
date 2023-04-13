@@ -1,16 +1,17 @@
 import { Request, Response } from "express";
 import jwt = require('jsonwebtoken');
+import { Document } from "mongoose";
 const User = require('../models/userModel');
 
-interface JwtPayload {
+export interface JwtPayload extends jwt.JwtPayload {
     _id: string;
 }
 
-interface IGetUserAuthInfoRequest extends Request {
-    userId: string;
+export interface IRequestWithUserAuth extends Request {
+    user: Document;
 }
 
-const requireAuth = async (req: IGetUserAuthInfoRequest, res: Response, next: () => void) => {
+const requireAuth = async (req: IRequestWithUserAuth, res: Response, next: () => void) => {
     const { authorization } = req.headers;
     if (!authorization) {
         return res.status(401).json({ error: "Authorization token required" });
@@ -19,7 +20,7 @@ const requireAuth = async (req: IGetUserAuthInfoRequest, res: Response, next: ()
     const token = authorization.split(" ")[1];
     try {
         const { _id } = jwt.verify(token, process.env.SECRET!) as JwtPayload;
-        req.userId = await User.findOne({ _id }).select('_id');
+        req.user = await User.findOne({ _id }).select('_id');
         next();
     } catch (error) {
         console.log(error);

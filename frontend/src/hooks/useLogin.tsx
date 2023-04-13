@@ -11,7 +11,7 @@ export const useLogin = () => {
   const hideError = () => {
     setTimeout(() => {
       setError("");
-    }, 5000);
+    }, 2500);
   };
 
   const login = async (username: string, password: string) => {

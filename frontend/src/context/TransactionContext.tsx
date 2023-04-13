@@ -26,8 +26,8 @@ interface ITransactionContext {
 }
 
 export const TRANSACTION_STATE_ACTIONS = {
-  GET_ALL: "GET_ALL",
-  GET_BY_ID: "GET_BY_ID",
+  SET_ALL: "SET_ALL",
+  SET_BY_ID: "SET_BY_ID",
   CREATE_NEW: "CREATE_NEW",
   UPDATE_BY_ID: "UPDATE_BY_ID",
   DELETE_BY_ID: "DELETE_BY_ID",
@@ -63,7 +63,7 @@ export const transactionReducer = (
   let netTotal = 0;
   let updatedTransactions: Transaction[] = [];
   switch (action.type) {
-    case TRANSACTION_STATE_ACTIONS.GET_ALL:
+    case TRANSACTION_STATE_ACTIONS.SET_ALL:
       totalIncome = sumIncomeOrExpenses(
         action.payload,
         TransactionCategory.INCOME
@@ -80,7 +80,7 @@ export const transactionReducer = (
         totalExpenses: totalExpenses,
         netTotal: netTotal,
       };
-    case TRANSACTION_STATE_ACTIONS.GET_BY_ID:
+    case TRANSACTION_STATE_ACTIONS.SET_BY_ID:
       return {
         ...state,
         transactions: action.payload,
