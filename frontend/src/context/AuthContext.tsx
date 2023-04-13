@@ -4,15 +4,16 @@ import {
   PropsWithChildren,
   createContext,
   useReducer,
+  useEffect,
 } from "react";
 
 interface IAuthState {
-  user: Object | null;
+  user: { username: string; token: string } | null;
 }
 
 interface IAuthAction {
   type: string;
-  payload: Object;
+  payload: { username: string; token: string };
 }
 
 interface IAuthContext {
@@ -54,6 +55,15 @@ export const AuthContextProvider: FunctionComponent<PropsWithChildren<{}>> = (
     user: null,
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
+
+  useEffect(() => {
+    const item = localStorage.getItem("user");
+    const user = item ? JSON.parse(item) : null;
+
+    if (user) {
+      dispatch({ type: AUTH_STATE_ACTIONS.LOGIN, payload: user });
+    }
+  }, []);
 
   console.log("AuthContext state", state);
 
