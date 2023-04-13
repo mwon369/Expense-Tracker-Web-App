@@ -4,13 +4,13 @@ const Login = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const handleLogin = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Log in");
   };
 
   return (
-    <form onSubmit={handleLogin} className="signup">
+    <form onSubmit={handleSubmit} className="signup">
       <h3>Login</h3>
       <h4>Username</h4>
       <input

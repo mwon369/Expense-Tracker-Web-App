@@ -14,22 +14,28 @@ const Navbar = () => {
 
   return (
     <header>
-      <div className="container">
-        <Link
-          onClick={() => setCurrentPage(ALL_PAGES.HOME as Pages)}
-          className={currentPage === ALL_PAGES.HOME ? "selected-link" : ""}
-          to="/"
-        >
-          <h1>Home</h1>
-        </Link>
-        <Link
-          onClick={() => setCurrentPage(ALL_PAGES.STATS as Pages)}
-          className={currentPage === ALL_PAGES.STATS ? "selected-link" : ""}
-          to="/stats/"
-        >
-          <h1>Stats</h1>
-        </Link>
-      </div>
+      <nav className="container">
+        <div className="authed-links">
+          <Link
+            onClick={() => setCurrentPage(ALL_PAGES.HOME as Pages)}
+            className={currentPage === ALL_PAGES.HOME ? "selected-link" : ""}
+            to="/"
+          >
+            <h1>Home</h1>
+          </Link>
+          <Link
+            onClick={() => setCurrentPage(ALL_PAGES.STATS as Pages)}
+            className={currentPage === ALL_PAGES.STATS ? "selected-link" : ""}
+            to="/stats"
+          >
+            <h1>Stats</h1>
+          </Link>
+        </div>
+        <div className="unauthed-links">
+          <Link to="/login">Log In</Link>
+          <Link to="/signup">Sign Up</Link>
+        </div>
+      </nav>
     </header>
   );
 };
