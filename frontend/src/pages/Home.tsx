@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
-import { TransactionCategory } from "../../../backend/models/transactionCategory";
 import TransactionDetails from "../components/TransactionDetails";
 import TransactionForm from "../components/TransactionForm";
 import { useTransactionContext } from "../hooks/useTransactionContext";
