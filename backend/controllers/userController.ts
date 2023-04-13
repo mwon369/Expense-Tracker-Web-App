@@ -8,8 +8,7 @@ const validator = require('validator');
 const User = require('../models/userModel');
 
 const createToken = (_id: ObjectId) => {
-    const secret = process.env.SECRET;
-    return secret ? jwt.sign({ _id }, secret, { expiresIn: '3d' }) : null;
+    return jwt.sign({ _id }, process.env.SECRET!, { expiresIn: '3d' });
 }
 
 const loginUser = async (req: Request, res: Response) => {
