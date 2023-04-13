@@ -7,12 +7,12 @@ import {
 } from "react";
 
 interface IAuthState {
-  user: any;
+  user: Object | null;
 }
 
 interface IAuthAction {
   type: string;
-  payload: any;
+  payload: Object;
 }
 
 interface IAuthContext {
@@ -33,7 +33,6 @@ export const AuthContext = createContext<IAuthContext>({
 });
 
 export const authReducer = (state: IAuthState, action: IAuthAction) => {
-  console.log(state);
   switch (action.type) {
     case AUTH_STATE_ACTIONS.LOGIN:
       return {

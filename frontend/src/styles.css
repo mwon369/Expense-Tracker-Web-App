@@ -116,7 +116,7 @@ input, select {
   font-family: "Poppins";
 }
 
-form.create button {
+form button {
   background: var(--success);
   border: 0;
   color: #fff;
@@ -165,7 +165,7 @@ div.error {
 .stats-container {
   background-color: white;
   width: 100%;
-  padding: 20px 20px 20px 20px;
+  padding: 20px;
   text-align: center;
   border-radius: 30px;
   font-size: 1.2em;
@@ -183,4 +183,12 @@ select.unfilled, input.unfilled {
 
 select.filled, input.filled {
   border: 1px solid var(--success)
+}
+
+form.signup, form.login {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 20px;
 }
