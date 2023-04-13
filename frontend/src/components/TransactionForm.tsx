@@ -4,6 +4,7 @@ import axios from "axios";
 import { useTransactionContext } from "../hooks/useTransactionContext";
 import { TRANSACTION_STATE_ACTIONS } from "../context/TransactionContext";
 import { roundToTwoDp } from "../utils/HelperFunctions";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const TransactionForm = () => {
   const { dispatch } = useTransactionContext();
@@ -12,6 +13,7 @@ const TransactionForm = () => {
   const [category, setCategory] = useState<TransactionCategory | "">("");
   const [description, setDescription] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const { state: authState } = useAuthContext();
 
   const hideError = () => {
     setTimeout(() => {
@@ -22,6 +24,12 @@ const TransactionForm = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!authState.user) {
+      setError("You are not logged in");
+      hideError();
+      return;
+    }
+
     const transaction = {
       value: roundToTwoDp(value),
       date: date,
@@ -30,7 +38,9 @@ const TransactionForm = () => {
     };
 
     await axios
-      .post(`${import.meta.env.VITE_BASE_URL}/api/transactions/`, transaction)
+      .post(`${import.meta.env.VITE_BASE_URL}/api/transactions/`, transaction, {
+        headers: { Authorization: `Bearer ${authState.user?.token}` },
+      })
       .then((resp) => {
         if (resp.status === 200) {
           setValue(0);

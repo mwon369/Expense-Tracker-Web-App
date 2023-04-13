@@ -5,6 +5,7 @@ import axios from "axios";
 import { useTransactionContext } from "../hooks/useTransactionContext";
 import { TRANSACTION_STATE_ACTIONS } from "../context/TransactionContext";
 import DeletePrompt from "./DeletePrompt";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const TransactionDetails = (props: Transaction) => {
   const { value, date, transactionCategory, description } = props;
@@ -12,6 +13,7 @@ const TransactionDetails = (props: Transaction) => {
   const { dispatch } = useTransactionContext();
   const [error, setError] = useState<string>("");
   const [showDeletePrompt, setShowDeletePrompt] = useState<boolean>(false);
+  const { state: authState } = useAuthContext();
 
   const hideError = () => {
     setTimeout(() => {
@@ -22,9 +24,17 @@ const TransactionDetails = (props: Transaction) => {
   const handlePromptShow = () => setShowDeletePrompt(!showDeletePrompt);
 
   const handleDelete = async () => {
+    if (!authState.user) {
+      setError("You are not logged in");
+      hideError();
+      return;
+    }
+
     const id = props._id;
     await axios
-      .delete(`${import.meta.env.VITE_BASE_URL}/api/transactions/${id}`)
+      .delete(`${import.meta.env.VITE_BASE_URL}/api/transactions/${id}`, {
+        headers: { Authorization: `Bearer ${authState.user?.token}` },
+      })
       .then((resp) => {
         dispatch({
           type: TRANSACTION_STATE_ACTIONS.DELETE_BY_ID,

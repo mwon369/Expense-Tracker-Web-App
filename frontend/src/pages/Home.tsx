@@ -5,13 +5,17 @@ import TransactionDetails from "../components/TransactionDetails";
 import TransactionForm from "../components/TransactionForm";
 import { useTransactionContext } from "../hooks/useTransactionContext";
 import { TRANSACTION_STATE_ACTIONS } from "../context/TransactionContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const Home = () => {
-  const { state, dispatch } = useTransactionContext();
+  const { state: transactionState, dispatch } = useTransactionContext();
+  const { state: authState } = useAuthContext();
 
   const fetchTransactionData = async (uri: string) => {
     await axios
-      .get(uri)
+      .get(uri, {
+        headers: { Authorization: `Bearer ${authState.user?.token}` },
+      })
       .then((resp) => {
         dispatch({
           type: TRANSACTION_STATE_ACTIONS.GET_ALL,
@@ -19,18 +23,22 @@ const Home = () => {
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response.data.error);
       });
   };
 
   useEffect(() => {
-    fetchTransactionData(`${import.meta.env.VITE_BASE_URL}/api/transactions/`);
-  }, []);
+    if (authState.user) {
+      fetchTransactionData(
+        `${import.meta.env.VITE_BASE_URL}/api/transactions/`
+      );
+    }
+  }, [authState.user]);
 
   return (
     <div className="home">
       <div className="transactions">
-        {state.transactions.map((t) => (
+        {transactionState.transactions.map((t) => (
           <TransactionDetails key={t._id.toString()} {...t} />
         ))}
       </div>
