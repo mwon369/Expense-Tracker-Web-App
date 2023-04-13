@@ -55,5 +55,7 @@ export const AuthContextProvider: FunctionComponent<PropsWithChildren<{}>> = (
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
 
+  console.log("AuthContext state", state);
+
   return <AuthContext.Provider value={{ state, dispatch }} {...props} />;
 };

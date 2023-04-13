@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useLogout } from "../hooks/useLogout";
 
 const Navbar = () => {
   type Pages = "HOME" | "STATS";
@@ -11,6 +12,11 @@ const Navbar = () => {
   const [currentPage, setCurrentPage] = useState<Pages>(
     ALL_PAGES.HOME as Pages
   );
+
+  const { logout } = useLogout();
+  const handleClick = () => {
+    logout();
+  };
 
   return (
     <header>
@@ -34,6 +40,9 @@ const Navbar = () => {
         <div className="unauthed-links">
           <Link to="/login">Log In</Link>
           <Link to="/signup">Sign Up</Link>
+          <div>
+            <button onClick={handleClick}>Log Out</button>
+          </div>
         </div>
       </nav>
     </header>
