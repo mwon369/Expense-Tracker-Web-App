@@ -5,17 +5,16 @@ import { useAuthContext } from "../hooks/useAuthContext";
 
 const Navbar = () => {
   type Pages = "HOME" | "STATS";
-  const ALL_PAGES = {
-    HOME: "HOME",
-    STATS: "STATS",
-  };
+  const enum ALL_PAGES {
+    HOME = "HOME",
+    STATS = "STATS",
+  }
 
-  const [currentPage, setCurrentPage] = useState<Pages>(
-    ALL_PAGES.HOME as Pages
-  );
+  const [currentPage, setCurrentPage] = useState<Pages>(ALL_PAGES.HOME);
 
   const { logout } = useLogout();
   const handleClick = () => {
+    setCurrentPage(ALL_PAGES.HOME);
     logout();
   };
 
@@ -28,7 +27,7 @@ const Navbar = () => {
           {authState.user && (
             <div>
               <Link
-                onClick={() => setCurrentPage(ALL_PAGES.HOME as Pages)}
+                onClick={() => setCurrentPage(ALL_PAGES.HOME)}
                 className={
                   currentPage === ALL_PAGES.HOME ? "selected-link" : ""
                 }
@@ -37,7 +36,7 @@ const Navbar = () => {
                 <h1>Home</h1>
               </Link>
               <Link
-                onClick={() => setCurrentPage(ALL_PAGES.STATS as Pages)}
+                onClick={() => setCurrentPage(ALL_PAGES.STATS)}
                 className={
                   currentPage === ALL_PAGES.STATS ? "selected-link" : ""
                 }

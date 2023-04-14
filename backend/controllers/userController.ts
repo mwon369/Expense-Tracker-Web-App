@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
-import { ObjectId } from 'mongoose';
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import validator from 'validator';
+import User from '../models/userModel';
 
 require('dotenv').config();
-import bcrypt = require('bcrypt');
-import jwt = require('jsonwebtoken');
-const validator = require('validator');
-const User = require('../models/userModel');
 
-const createToken = (_id: ObjectId) => {
+const createToken = (_id: mongoose.ObjectId) => {
     return jwt.sign({ _id }, process.env.SECRET!, { expiresIn: '3d' });
 }
 
@@ -60,4 +60,4 @@ const signUpUser = async (req: Request, res: Response) => {
     res.status(200).json({ username, token });
 }
 
-module.exports = { loginUser, signUpUser };
+export { loginUser, signUpUser };

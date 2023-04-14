@@ -1,14 +1,14 @@
 const express = require('express');
-const {
-    getAllTransactions,
-    getSingleTransactionByID,
-    createNewTransaction,
-    updateSingleTransactionByID,
-    deleteSingleTransactionByID
-} = require('../controllers/transactionController');
-const requireAuth = require('../middleware/requireAuth');
-
 const router = express.Router();
+import {
+    getAllTransactions, 
+    getSingleTransactionByID, 
+    createNewTransaction, 
+    updateSingleTransactionByID, 
+    deleteSingleTransactionByID
+} from '../controllers/transactionController';
+import { requireAuth } from "../middleware/requireAuth";
+
 
 router.use(requireAuth);
 

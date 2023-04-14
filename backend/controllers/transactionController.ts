@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
 import { IRequestWithUserAuth } from '../middleware/requireAuth';
-
-const Transaction = require('../models/transactionModel');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import Transaction from '../models/transactionModel';
 
 const getAllTransactions = async (req: IRequestWithUserAuth, res: Response) => {
-    const userId = req.user._id;
+    const userId = req.user?._id;
     const transactions = await Transaction.find({ userId }).sort({ date: -1 });
     res.status(200).json(transactions);
 }
@@ -28,7 +27,7 @@ const createNewTransaction = async (req: IRequestWithUserAuth, res: Response) =>
     const { value, date, transactionCategory, description } = req.body;
 
     try {
-        const userId = req.user._id;
+        const userId = req.user?._id;
         const transaction = await Transaction.create({ value, date, transactionCategory, description, userId });
         res.status(200).json(transaction);
     } catch (error: unknown) {
@@ -66,7 +65,7 @@ const deleteSingleTransactionByID = async (req: Request, res: Response) => {
     res.status(200).json(transaction);
 }
 
-module.exports = {
+export {
     getAllTransactions,
     getSingleTransactionByID,
     createNewTransaction,

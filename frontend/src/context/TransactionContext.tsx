@@ -15,23 +15,25 @@ interface ITransactionState {
   netTotal: number;
 }
 
-interface ITransactionAction {
-  type: string;
-  payload: any | Transaction[] | Transaction;
-}
+type TransactionAction =
+  | { type: TRANSACTION_STATE_ACTIONS.SET_ALL; payload: Transaction[] }
+  | { type: TRANSACTION_STATE_ACTIONS.SET_BY_ID; payload: Transaction }
+  | { type: TRANSACTION_STATE_ACTIONS.CREATE_NEW; payload: Transaction }
+  | { type: TRANSACTION_STATE_ACTIONS.UPDATE_BY_ID; payload: Transaction }
+  | { type: TRANSACTION_STATE_ACTIONS.DELETE_BY_ID; payload: Transaction };
 
 interface ITransactionContext {
   state: ITransactionState;
-  dispatch: Dispatch<ITransactionAction>;
+  dispatch: Dispatch<TransactionAction>;
 }
 
-export const TRANSACTION_STATE_ACTIONS = {
-  SET_ALL: "SET_ALL",
-  SET_BY_ID: "SET_BY_ID",
-  CREATE_NEW: "CREATE_NEW",
-  UPDATE_BY_ID: "UPDATE_BY_ID",
-  DELETE_BY_ID: "DELETE_BY_ID",
-};
+export enum TRANSACTION_STATE_ACTIONS {
+  SET_ALL = "SET_ALL",
+  SET_BY_ID = "SET_BY_ID",
+  CREATE_NEW = "CREATE_NEW",
+  UPDATE_BY_ID = "UPDATE_BY_ID",
+  DELETE_BY_ID = "DELETE_BY_ID",
+}
 
 export const TransactionContext = createContext<ITransactionContext>({
   state: {
@@ -56,12 +58,13 @@ const sumIncomeOrExpenses = (
 
 export const transactionReducer = (
   state: ITransactionState,
-  action: ITransactionAction
+  action: TransactionAction
 ) => {
   let totalIncome = 0;
   let totalExpenses = 0;
   let netTotal = 0;
   let updatedTransactions: Transaction[] = [];
+
   switch (action.type) {
     case TRANSACTION_STATE_ACTIONS.SET_ALL:
       totalIncome = sumIncomeOrExpenses(
@@ -83,26 +86,9 @@ export const transactionReducer = (
     case TRANSACTION_STATE_ACTIONS.SET_BY_ID:
       return {
         ...state,
-        transactions: action.payload,
+        transactions: [action.payload],
       };
     case TRANSACTION_STATE_ACTIONS.CREATE_NEW:
-      updatedTransactions = [action.payload, ...state.transactions];
-      totalIncome = sumIncomeOrExpenses(
-        updatedTransactions,
-        TransactionCategory.INCOME
-      );
-      totalExpenses = sumIncomeOrExpenses(
-        updatedTransactions,
-        TransactionCategory.EXPENSE
-      );
-      netTotal = totalIncome - totalExpenses;
-      return {
-        ...state,
-        transactions: updatedTransactions,
-        totalIncome: totalIncome,
-        totalExpenses: totalExpenses,
-        netTotal: netTotal,
-      };
     case TRANSACTION_STATE_ACTIONS.UPDATE_BY_ID:
       updatedTransactions = [action.payload, ...state.transactions];
       totalIncome = sumIncomeOrExpenses(
@@ -123,7 +109,7 @@ export const transactionReducer = (
       };
     case TRANSACTION_STATE_ACTIONS.DELETE_BY_ID:
       updatedTransactions = state.transactions.filter(
-        (t) => t._id.toString() !== action.payload._id
+        (t) => t._id !== action.payload._id
       );
       totalIncome = sumIncomeOrExpenses(
         updatedTransactions,

@@ -1,6 +1,19 @@
 import { TransactionCategory } from './transactionCategory';
+import mongoose from 'mongoose';
 
-const mongoose = require('mongoose');
+interface ITransaction {
+    value: number;
+    date: Date;
+    transactionCategory: TransactionCategory;
+    description: string;
+    userId: string;
+}
+
+export interface ITransactionDocument extends ITransaction, mongoose.Document {
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 const Schema = mongoose.Schema;
 
 const transactionSchema = new Schema({
@@ -27,4 +40,4 @@ const transactionSchema = new Schema({
     }
 }, { timestamps: true })
 
-module.exports = mongoose.model('Transaction', transactionSchema);
+export default mongoose.model<ITransactionDocument>('Transaction', transactionSchema);

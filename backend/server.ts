@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 require('dotenv').config();
 const express = require('express');
@@ -14,7 +14,7 @@ app.use(cors({
     origin: 'http://localhost:5173'
 }));
 
-app.use((req: Request, res: Response, next: () => void) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
     console.log(req.path, req.method);
     next();
 })

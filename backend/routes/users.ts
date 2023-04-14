@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const {
+import {
     loginUser,
     signUpUser
-} = require('../controllers/userController');
+} from '../controllers/userController';
 
 router.post('/login', loginUser);
 

@@ -12,8 +12,8 @@ interface IAuthState {
 }
 
 interface IAuthAction {
-  type: string;
-  payload: { username: string; token: string };
+  type: AUTH_STATE_ACTIONS.LOGIN | AUTH_STATE_ACTIONS.LOGOUT;
+  payload: IAuthState["user"];
 }
 
 interface IAuthContext {
@@ -21,10 +21,10 @@ interface IAuthContext {
   dispatch: Dispatch<IAuthAction>;
 }
 
-export const AUTH_STATE_ACTIONS = {
-  LOGIN: "LOGIN",
-  LOGOUT: "LOGOUT",
-};
+export enum AUTH_STATE_ACTIONS {
+  LOGIN = "LOGIN",
+  LOGOUT = "LOGOUT",
+}
 
 export const AuthContext = createContext<IAuthContext>({
   state: {
@@ -57,9 +57,7 @@ export const AuthContextProvider: FunctionComponent<PropsWithChildren<{}>> = (
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
-    const item = localStorage.getItem("user");
-    const user = item ? JSON.parse(item) : null;
-
+    const user = JSON.parse(localStorage.getItem("user")!);
     if (user) {
       dispatch({ type: AUTH_STATE_ACTIONS.LOGIN, payload: user });
     }
