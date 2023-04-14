@@ -89,8 +89,32 @@ export const transactionReducer = (
         transactions: [action.payload],
       };
     case TRANSACTION_STATE_ACTIONS.CREATE_NEW:
-    case TRANSACTION_STATE_ACTIONS.UPDATE_BY_ID:
       updatedTransactions = [action.payload, ...state.transactions];
+      totalIncome = sumIncomeOrExpenses(
+        updatedTransactions,
+        TransactionCategory.INCOME
+      );
+      totalExpenses = sumIncomeOrExpenses(
+        updatedTransactions,
+        TransactionCategory.EXPENSE
+      );
+      netTotal = totalIncome - totalExpenses;
+      return {
+        ...state,
+        transactions: updatedTransactions,
+        totalIncome: totalIncome,
+        totalExpenses: totalExpenses,
+        netTotal: netTotal,
+      };
+    case TRANSACTION_STATE_ACTIONS.UPDATE_BY_ID:
+      updatedTransactions = state.transactions.map((t) => {
+        if (t._id !== action.payload._id) {
+          return t;
+        }
+        return {
+          ...action.payload,
+        };
+      });
       totalIncome = sumIncomeOrExpenses(
         updatedTransactions,
         TransactionCategory.INCOME
