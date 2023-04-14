@@ -3,7 +3,7 @@ import { useAuthContext } from "./hooks/useAuthContext";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import "./styles.css";
-import Stats from "./pages/Stats";
+import Summary from "./pages/Summary";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 
@@ -20,8 +20,8 @@ function App() {
               element={authState.user ? <Home /> : <Navigate to="/login" />}
             />
             <Route
-              path="/stats"
-              element={authState.user ? <Stats /> : <Navigate to="/login" />}
+              path="/summary"
+              element={authState.user ? <Summary /> : <Navigate to="/login" />}
             />
             <Route
               path="/login"

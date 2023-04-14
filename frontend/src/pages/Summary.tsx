@@ -2,11 +2,11 @@ import React from "react";
 import { useTransactionContext } from "../hooks/useTransactionContext";
 import { roundToTwoDp } from "../utils/HelperFunctions";
 
-const Stats = () => {
+const Summary = () => {
   const { state } = useTransactionContext();
 
   return (
-    <div className="stats-container">
+    <div className="summary-container">
       <h2>
         Total Income: &nbsp;&nbsp;
         <span className="income">{roundToTwoDp(state.totalIncome)}</span>
@@ -27,4 +27,4 @@ const Stats = () => {
   );
 };
 
-export default Stats;
+export default Summary;

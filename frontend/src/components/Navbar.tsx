@@ -4,10 +4,10 @@ import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const Navbar = () => {
-  type Pages = "HOME" | "STATS";
+  type Pages = ALL_PAGES.HOME | ALL_PAGES.SUMMARY;
   const enum ALL_PAGES {
     HOME = "HOME",
-    STATS = "STATS",
+    SUMMARY = "SUMMARY",
   }
 
   const [currentPage, setCurrentPage] = useState<Pages>(ALL_PAGES.HOME);
@@ -36,13 +36,13 @@ const Navbar = () => {
                 <h1>Home</h1>
               </Link>
               <Link
-                onClick={() => setCurrentPage(ALL_PAGES.STATS)}
+                onClick={() => setCurrentPage(ALL_PAGES.SUMMARY)}
                 className={
-                  currentPage === ALL_PAGES.STATS ? "selected-link" : ""
+                  currentPage === ALL_PAGES.SUMMARY ? "selected-link" : ""
                 }
-                to="/stats"
+                to="/summary"
               >
-                <h1>Stats</h1>
+                <h1>Summary</h1>
               </Link>
             </div>
           )}
