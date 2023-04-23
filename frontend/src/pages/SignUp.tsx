@@ -7,7 +7,7 @@ const Signup = () => {
   const [confirmedPassword, setConfirmedPassword] = useState<string>("");
   const { signUp, isLoading, error } = useSignUp();
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     signUp(username, password, confirmedPassword);
   };
