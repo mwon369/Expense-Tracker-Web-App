@@ -9,7 +9,7 @@ const Signup = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await signUp(username, password, confirmedPassword);
+    signUp(username, password, confirmedPassword);
   };
 
   return (

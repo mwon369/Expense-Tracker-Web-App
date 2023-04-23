@@ -10,8 +10,8 @@ const Home = () => {
   const { state: transactionState, dispatch } = useTransactionContext();
   const { state: authState } = useAuthContext();
 
-  const fetchTransactionData = async (uri: string) => {
-    await axios
+  const fetchTransactionData = (uri: string) => {
+    axios
       .get(uri, {
         headers: { Authorization: `Bearer ${authState.user?.token}` },
       })

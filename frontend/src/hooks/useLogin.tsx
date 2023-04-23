@@ -14,7 +14,7 @@ export const useLogin = () => {
     }, 2500);
   };
 
-  const login = async (username: string, password: string) => {
+  const login = (username: string, password: string) => {
     setIsLoading(true);
     setError("");
 
@@ -23,7 +23,7 @@ export const useLogin = () => {
       password: password,
     };
 
-    await axios
+    axios
       .post(`${import.meta.env.VITE_BASE_URL}/api/user/login`, user)
       .then((resp) => {
         if (resp.status === 200) {

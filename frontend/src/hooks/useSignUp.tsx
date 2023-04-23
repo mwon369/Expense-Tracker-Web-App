@@ -14,7 +14,7 @@ export const useSignUp = () => {
     }, 5000);
   };
 
-  const signUp = async (
+  const signUp = (
     username: string,
     password: string,
     confirmedPassword: string
@@ -34,7 +34,7 @@ export const useSignUp = () => {
       password: password,
     };
 
-    await axios
+    axios
       .post(`${import.meta.env.VITE_BASE_URL}/api/user/signup`, newUser)
       .then((resp) => {
         if (resp.status === 200) {

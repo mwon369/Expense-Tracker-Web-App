@@ -21,7 +21,7 @@ const TransactionForm = () => {
     }, 2500);
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!authState.user) {
@@ -37,7 +37,7 @@ const TransactionForm = () => {
       description: description,
     };
 
-    await axios
+    axios
       .post(`${import.meta.env.VITE_BASE_URL}/api/transactions/`, transaction, {
         headers: { Authorization: `Bearer ${authState.user?.token}` },
       })

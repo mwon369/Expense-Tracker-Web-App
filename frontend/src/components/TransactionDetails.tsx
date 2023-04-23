@@ -23,7 +23,7 @@ const TransactionDetails = (props: Transaction) => {
 
   const handlePromptShow = () => setShowDeletePrompt(!showDeletePrompt);
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
     if (!authState.user) {
       setError("You are not logged in");
       hideError();
@@ -31,7 +31,7 @@ const TransactionDetails = (props: Transaction) => {
     }
 
     const id = props._id;
-    await axios
+    axios
       .delete(`${import.meta.env.VITE_BASE_URL}/api/transactions/${id}`, {
         headers: { Authorization: `Bearer ${authState.user?.token}` },
       })

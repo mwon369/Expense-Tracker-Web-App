@@ -8,7 +8,7 @@ const Login = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await login(username, password);
+    login(username, password);
   };
 
   return (
